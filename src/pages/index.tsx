@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
-import { Multiselect } from "./Multiselect";
+import { Multiselect } from "../Multiselect";
 
 const pageStyles = {
   color: "#232129",
