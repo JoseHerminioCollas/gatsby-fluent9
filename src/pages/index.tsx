@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
+import { Multiselect } from "./Multiselect";
 
 const pageStyles = {
   color: "#232129",
@@ -140,11 +141,12 @@ const links = [
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <main style={pageStyles}>
+    <Multiselect />
       <h1 style={headingStyles}>
         React Fluent 9 Examples
         <br />
         <span style={headingAccentStyles}>
-          ABC
+          XXX
         </span>
       </h1>
       <FluentProvider theme={webLightTheme}>
