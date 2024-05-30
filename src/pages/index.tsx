@@ -141,15 +141,15 @@ const links = [
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <main style={pageStyles}>
-    <Multiselect />
       <h1 style={headingStyles}>
         React Fluent 9 Examples
         <br />
         <span style={headingAccentStyles}>
-          XXX
+          XXXxxx
         </span>
       </h1>
       <FluentProvider theme={webLightTheme}>
+        <Multiselect />
         <span style={headingAccentStyles}>
           XXX
         </span>
