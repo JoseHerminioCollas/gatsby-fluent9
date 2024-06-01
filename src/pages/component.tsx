@@ -51,17 +51,30 @@ const IndexPage: React.FC<PageProps> = () => {
     const comboId = useId();
     const styles = useStyles();
     const [query, setQuery] = React.useState<string>('');
-    const children = useComboboxFilter(query, options, {
-        noOptionsMessage: 'No animals match your search.',
-      });    
     const onOptionSelect: ComboboxProps['onOptionSelect'] = (e, data) => {
         setQuery(data.optionText ?? '');
     };
+    function optionToText(option: string | { children: React.ReactNode; value: string }) {
+        if (typeof option === 'string') {
+          return option;
+        }
+        if (Array.isArray(option.children)) {
+          return option.children.map(optionElement => optionElement.toString()).toString();
+        }
+        if (option.children) {
+          return option.children.toString();
+        }
+        return '';
+      }
+      const children = useComboboxFilter(query, options, {
+        noOptionsMessage: 'No animals match your search.',
+        optionToText,
+      });    
 
-    return (
+      return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>
-        React Fluent 9  x
+        React Fluent 9  
       </h1>
       <FluentProvider theme={webLightTheme}>
       <Combobox
