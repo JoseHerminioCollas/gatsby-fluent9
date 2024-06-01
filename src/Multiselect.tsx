@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   button: {
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    display: "inline-block",
+    display: "block",
     width: "200px",
     ...shorthands.overflow("hidden")
   }
