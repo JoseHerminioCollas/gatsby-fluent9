@@ -3,10 +3,6 @@ import type { HeadFC, PageProps } from "gatsby";
 import {
   FluentProvider,
   webLightTheme,
-  Button,
-} from "@fluentui/react-components";
-import { Multiselect } from "../Multiselect";
-import {
   Combobox,
   ComboboxProps,
   makeStyles,
@@ -29,14 +25,6 @@ const pageStyles = {
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 };
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-};
-const headingAccentStyles = {
-  color: "#663399",
-};
 const options = [
   { children: "Alligator", value: "ec5a9b9e-af83-4bf2-be3d-860583a031cb" },
   { children: "Bee", value: "f2245404-59a7-44e7-842b-df63d6b4741b" },
@@ -55,38 +43,44 @@ const options = [
   { children: "Horse", value: "bea41f2a-127c-4519-9366-01e2d2ae4f8a" },
   { children: "Lion", value: "b7e394bf-1066-49c0-bf17-ba0deb287dea" },
 ];
+/**
+ * optionToText
+ * Provide a custom funtion to the FluentUI Combobox component.
+ * Account for options array with options that have keys in value property
+ */
+function optionToText(
+  option: string | { children: React.ReactNode; value: string },
+) {
+  if (typeof option === "string") {
+    return option;
+  }
+  if (Array.isArray(option.children)) {
+    return option.children
+      .map((optionElement) => optionElement.toString())
+      .toString();
+  }
+  if (option.children) {
+    return option.children.toString();
+  }
+  return "";
+}
 
 const IndexPage: React.FC<PageProps> = () => {
   const comboId = useId();
-  const styles = useStyles();
   const [query, setQuery] = React.useState<string>("");
-  const onOptionSelect: ComboboxProps["onOptionSelect"] = (e, data) => {
-    setQuery(data.optionText ?? "");
-  };
-  function optionToText(
-    option: string | { children: React.ReactNode; value: string },
-  ) {
-    if (typeof option === "string") {
-      return option;
-    }
-    if (Array.isArray(option.children)) {
-      return option.children
-        .map((optionElement) => optionElement.toString())
-        .toString();
-    }
-    if (option.children) {
-      return option.children.toString();
-    }
-    return "";
-  }
+  const [selectedOption, setSelectedOption] = React.useState<any>(null);
   const children = useComboboxFilter(query, options, {
     noOptionsMessage: "No animals match your search.",
     optionToText,
   });
+  const onOptionSelect: ComboboxProps["onOptionSelect"] = (e, data) => {
+    setSelectedOption(data);
+    setQuery(data.optionText ?? "");
+  };
 
   return (
     <main style={pageStyles}>
-      <h1 style={headingStyles}>React Fluent 9</h1>
+      <h1>Combobox Issue:</h1>
       <FluentProvider theme={webLightTheme}>
         <Combobox
           onOptionSelect={onOptionSelect}
@@ -98,6 +92,7 @@ const IndexPage: React.FC<PageProps> = () => {
           {children}
         </Combobox>
       </FluentProvider>
+      <pre>{JSON.stringify(selectedOption, undefined, 2)}</pre>
     </main>
   );
 };
